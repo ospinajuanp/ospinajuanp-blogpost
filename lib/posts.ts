@@ -12,6 +12,7 @@ export interface PostData {
   date: string;
   description: string;
   image?: string;
+  hidden?: boolean;
   protected?: boolean;
   contentHtml?: string;
 }
@@ -37,7 +38,7 @@ export function getSortedPostsData(): PostData[] {
     // Combine the data with the id
     return {
       slug,
-      ...(matterResult.data as { title: string; date: string; description: string; image?: string; protected?: boolean }),
+      ...(matterResult.data as { title: string; date: string; description: string; image?: string; hidden?: boolean; protected?: boolean }),
     };
   });
 
@@ -68,7 +69,7 @@ export async function getPostData(slug: string): Promise<PostData> {
   return {
     slug,
     contentHtml,
-    ...(matterResult.data as { title: string; date: string; description: string; image?: string; protected?: boolean }),
+    ...(matterResult.data as { title: string; date: string; description: string; image?: string; hidden?: boolean; protected?: boolean }),
   };
 }
 
