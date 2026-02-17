@@ -13,7 +13,7 @@ export default function PostContent({ post }: { post: PostData }) {
     }
 
     return (
-        <article className="prose prose-invert mx-auto">
+        <article className="prose prose-lg prose-invert mx-auto">
             <div className="mb-10 text-center">
                 <div className="mb-4 text-sm text-[#a3a3a3]">
                     <Link href="/" className="hover:text-white transition-colors">
