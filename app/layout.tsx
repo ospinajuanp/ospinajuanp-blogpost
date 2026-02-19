@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from 'next/link';
+import Image from 'next/image';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Minimalist Dark Blog",
+  title: "OspinaJuanP Blog",
   description: "A static blog built with Next.js and Tailwind CSS",
 };
 
@@ -30,7 +31,8 @@ export default function RootLayout({
       >
         <header className="py-8">
           <div className="container flex justify-between items-center">
-            <Link href="/" className="text-lg font-bold tracking-tight">
+            <Link href="/" className="text-lg font-bold tracking-tight flex items-center gap-2">
+            <Image src="/favicon.ico" alt="Logo" width={50} height={50} />
               ospinajuanp.
             </Link>
             <nav>
