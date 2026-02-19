@@ -4,7 +4,7 @@ date: "2026-02-18"
 description: "Análisis sobre la importancia de las influencias y cómo la verdadera innovación surge de coleccionar y conectar ideas preexistentes."
 image: "/libro/Libro-roba-como-un-artista-cap-1.jpg"
 protected: false
-hidden: true
+hidden: false
 ---
 
 # 🎨 Nada es 100% original
