@@ -3,7 +3,7 @@ title: "Resumen: Sesión 19 de febrero"
 date: "2026-02-19"
 description: "Explicación de la sesión sobre software, servicios de internet y lineamientos para la evidencia del mapa mental."
 image: "/sena/Sena-semana-2.png"
-protected: false
+protected: true
 hidden: false
 ---
 
