@@ -2,7 +2,7 @@
 title: "Resumen:Tecnologías de la Información y la Comunicación"
 date: "2026-02-17"
 description: "Resumen ejecutivo sobre hardware, software, internet y herramientas ofimáticas basado en el material de formación del SENA."
-image: "/Sena-resumen-archivo-1.png"
+image: "/sena/Sena-resumen-archivo-1.png"
 protected: true
 hidden: false
 ---

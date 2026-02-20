@@ -3,7 +3,7 @@ date: "2026-02-14"
 description: "Comparto cómo resolví la actividad propuesta, junto con los
   enlaces y recursos que utilicé como apoyo para desarrollarla."
 hidden: false
-image: "/sena-semana-1-Actividad.png"
+image: "/sena/sena-semana-1-Actividad.png"
 protected: true
 title: "Semana 1 - Actividad 1 del SENA"
 ---

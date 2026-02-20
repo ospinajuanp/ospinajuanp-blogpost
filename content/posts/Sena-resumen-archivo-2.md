@@ -2,7 +2,7 @@
 title: "Resumen: Validación y Gestión de Requisitos"
 date: "2026-02-19"
 description: "Guía práctica sobre cómo asegurar que lo que construimos es realmente lo que el cliente necesita, evitando errores costosos."
-image: "/Sena-resumen-archivo-2.png"
+image: "/sena/Sena-resumen-archivo-2.png"
 protected: true
 hidden: false
 ---

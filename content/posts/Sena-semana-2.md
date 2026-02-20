@@ -2,8 +2,8 @@
 title: "Resumen: Sesión 19 de febrero"
 date: "2026-02-19"
 description: "Explicación de la sesión sobre software, servicios de internet y lineamientos para la evidencia del mapa mental."
-image: "/Sena-semana-2.png"
-protected: true
+image: "/sena/Sena-semana-2.png"
+protected: false
 hidden: false
 ---
 
@@ -22,16 +22,21 @@ hidden: false
 Para la entrega de la evidencia, se deben seguir estos lineamientos técnicos y de forma:
 
 * **Formato obligatorio:** El documento debe incluir portada, introducción y referencias bibliográficas bajo **Normas APA**.
-* **Guía de aprendizaje:** Consultar el punto **3.1.1** en la guía y realizar la lectura sobre Tecnologías de la Información y la Comunicación (TIC).
+* **Guía de aprendizaje:** Consultar el punto **3.1.1** en la guía y realizar la lectura sobre "Tecnologías de la Información y la Comunicación (TIC)".
 * **Mapa Mental (Evidencia):** Se debe explicar qué es el software, sus tipos y los servicios de internet.
-    * *Recomendación:* Se sugirió usar **StarUML** para el modelado.
-* **Trello:** Configurar el tablero para gestión de proyectos.
-    * Crear tareas específicas.
+    * *Recomendación:* Se sugirió usar [**StarUML**](https://staruml.io/) para el modelado del mapa conceptual.
+    * CAPTURA DE PANTALLA E INCLUIR EN EL ARCHIVO
+* [**Trello (Evidencia):**](https://trello.com/) Configurar el tablero para gestión de proyectos.
+    * Crear tareas generales de ejemplo.
     * Asignar roles o columnas por etapas: **Análisis, Diseño y Desarrollo**.
+    * CAPTURA DE PANTALLA E INCLUIR EN EL ARCHIVO
 
 ---
+# Contextualizacion por el instructor
 
-# 💻 ¿Qué es el Software y qué tipos hay?
+Aqui vas a encontrar la explicacion que nos brindo el instructor y es de apoyo para generar el mapa conceptual.
+
+## 💻 ¿Qué es el Software y qué tipos hay?
 
 Básicamente, el software es la parte "invisible" o intangible de tus dispositivos (lo que no puedes tocar, a diferencia del teclado o la pantalla). Se divide en tres grandes grupos:
 
@@ -41,13 +46,38 @@ Básicamente, el software es la parte "invisible" o intangible de tus dispositiv
 
 ---
 
-# 🌐 Servicios de Internet y Herramientas Colaborativas
+## 🌐 Servicios de Internet y Herramientas Colaborativas
 
 Internet no es solo navegar; es un mundo de servicios que nos facilitan la vida y el intercambio de información:
 
 * **Comunicación:** Correo electrónico, videollamadas y mensajería instantánea.
 * **Almacenamiento en la nube:** Uso de servidores remotos para guardar archivos, como Google Drive o OneDrive.
 * **Herramientas para trabajar en equipo:** Usaremos **Trello** para organizar tareas, **Google Docs** para escribir juntos y **GitHub** para el código.
+
+---
+
+# 📧 Errores de correo
+Algunas recomendaciones
+
+- Ingresa en [senasofiaplus](http://senasofiaplus.edu.co/sofia-public/)
+- Te va a salir algo como en la imagen
+![Imagen de referencia](/sena/Sena-semana-2-correo.jpg)
+- - Solo dale click en *Aceptar términos y condiciones* y *siguiente* 
+- - Digita tu contraseña de sofia plus 
+- - Solo dale click en *Activar cuenta Soy SENA*
+- - Coloca tu contraseña para el correo
+
+Si ya tienes identificado cual es tu correo electronico de @soy.sena.edu.co
+
+- Si tienes el correo pero no te deja validar el correo, o colocar las credenciales 
+- Ingresa en [Portal Recuperacion](https://passwordreset.microsoftonline.com/)
+- - Coloca Correo sena
+- - Resuelve el captcha 
+- - Click en *siguiente*
+- - Te debe salir medio de recuperacion de cuenta, donde estara tu correo personal al cual lo seleccionas le das en enviar correo electronico
+- - En tu correo electronico te llegara un codigo que pondras en la web
+- - Coloca una cuenta nueva para tu cuenta de correo electronico sena
+
 
 ---
 

@@ -2,7 +2,7 @@
 title: "Semana 1 - Primera sesión del SENA"
 date: "2026-02-12"
 description: "Resumen de la primera sesión del SENA (12/02/2026). Introducción y explicación para el desarrollo de la fase de análisis y actividades a realizar."
-image: "/sena-semana-1.jpg"
+image: "/sena/sena-semana-1.jpg"
 protected: true
 hidden: false
 ---
