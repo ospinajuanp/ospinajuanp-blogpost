@@ -24,6 +24,9 @@ export const metadata: Metadata = {
   keywords: ["Next.js", "Blog", "SENA", "Tecnología", "Desarrollo Web", "OspinaJuanP"],
   authors: [{ name: "OspinaJuanP" }],
   creator: "OspinaJuanP",
+  verification: {
+    google: "FDuqDintsq-yBUwCZJdsZFB4zDzsj_5rA7gz806GZg8",
+  },
   openGraph: {
     type: "website",
     locale: "es_CO",
