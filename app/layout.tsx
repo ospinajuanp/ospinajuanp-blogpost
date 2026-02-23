@@ -15,8 +15,32 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "OspinaJuanP Blog",
-  description: "A static blog built with Next.js and Tailwind CSS",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://ospinajuanp-blogpost.vercel.app'),
+  title: {
+    default: "OspinaJuanP Blog",
+    template: "%s | OspinaJuanP"
+  },
+  description: "Este blog nace como un espacio para compartir mi crecimiento en la tecnología. Apuntes del SENA, conceptos y construcción de conocimiento en público.",
+  keywords: ["Next.js", "Blog", "SENA", "Tecnología", "Desarrollo Web", "OspinaJuanP"],
+  authors: [{ name: "OspinaJuanP" }],
+  creator: "OspinaJuanP",
+  openGraph: {
+    type: "website",
+    locale: "es_CO",
+    url: "/",
+    title: "OspinaJuanP Blog",
+    description: "Espacio para compartir mi crecimiento en la tecnología. Apuntes, conceptos y construcción de conocimiento en público.",
+    siteName: "OspinaJuanP Blog",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "OspinaJuanP Blog",
+    description: "Espacio para compartir mi crecimiento en la tecnología.",
+    creator: "@ospinajuanp", // Update this if you have a different handle
+  },
+  alternates: {
+    canonical: "/",
+  }
 };
 
 export default function RootLayout({
@@ -32,7 +56,7 @@ export default function RootLayout({
         <header className="py-8">
           <div className="container flex justify-between items-center">
             <Link href="/" className="text-lg font-bold tracking-tight flex items-center gap-2">
-            <Image src="/favicon.ico" alt="Logo" width={50} height={50} />
+              <Image src="/favicon.ico" alt="Logo" width={50} height={50} />
               ospinajuanp.
             </Link>
             <nav>
