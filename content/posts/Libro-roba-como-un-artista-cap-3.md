@@ -1,6 +1,6 @@
 ---
 title: "Capítulo 3: Escribe el libro que quieres leer (Austin Kleon)"
-date: "2026-03-03"
+date: "2026-03-02"
 description: "Sobre la importancia de crear las herramientas, historias o soluciones que nosotros mismos desearíamos encontrar en el mundo."
 image: "/libro/Libro-roba-como-un-artista-cap-3.png"
 protected: false
