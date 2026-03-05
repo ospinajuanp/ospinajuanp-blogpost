@@ -26,11 +26,11 @@ export default function PostContent({ post }: { post: PostData }) {
                     {post.title}
                 </h1>
                 {post.image && (
-                    <div className="relative w-full h-64 md:h-96 mb-8 overflow-hidden rounded-xl bg-[#262626]">
+                    <div className="relative w-full mb-8 overflow-hidden rounded-xl bg-[#262626]">
                         <img
                             src={post.image}
                             alt={post.title}
-                            className="object-cover w-full h-full"
+                            className="w-full h-auto"
                         />
                     </div>
                 )}

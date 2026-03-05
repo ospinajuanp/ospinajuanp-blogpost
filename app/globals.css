@@ -152,3 +152,18 @@ a:hover {
 .text-sm {
   font-size: 0.875rem;
 }
+
+/* Blog Post Image Fixes */
+.prose img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 2rem auto;
+  border-radius: 0.75rem;
+}
+
+/* Ensure the prose container itself doesn't overflow */
+.prose {
+  max-width: 100% !important;
+}
