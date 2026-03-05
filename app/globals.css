@@ -1,11 +1,23 @@
-@import "tailwindcss";
-@plugin "@tailwindcss/typography";
-
 :root {
   --background: #0f0f0f;
   --foreground: #e5e5e5;
+  --text-muted: #a3a3a3;
   --accent: #a3a3a3;
   --link-hover: #ffffff;
+  --border: #333333;
+  --card-bg: #111111;
+  --card-hover: #222222;
+}
+
+.secondary {
+  --background: #d8d2c4;
+  --foreground: #1f2a30;
+  --text-muted: #3a4a52;
+  --accent: #ffffff;
+  --link-hover: #0a0a0a;
+  --border: #b8b2a4;
+  --card-bg: #d0cabc;
+  --card-hover: #c8c2b4;
 }
 
 body {
@@ -13,6 +25,40 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   line-height: 1.6;
+}
+
+/* Custom Component Classes (replaces inline styles & Tailwind) */
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.25rem;
+}
+
+.logo-text-title {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  color: var(--foreground);
+}
+
+.logo-text-subtitle {
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: var(--foreground);
+}
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--foreground);
+  transition: border-color 0.2s ease, color 0.2s ease;
 }
 
 h1,
@@ -43,4 +89,66 @@ a:hover {
   /* approx 672px */
   margin: 0 auto;
   padding: 0 1.5rem;
+}
+
+/* Layout Utilities (replacing Tailwind) */
+.flex {
+  display: flex !important;
+}
+
+.flex-col {
+  flex-direction: column !important;
+}
+
+.items-center {
+  align-items: center !important;
+}
+
+.justify-between {
+  justify-content: space-between !important;
+}
+
+.gap-1 {
+  gap: 0.25rem !important;
+}
+
+.gap-2 {
+  gap: 0.5rem !important;
+}
+
+.gap-4 {
+  gap: 1rem !important;
+}
+
+.logo-image {
+  border: 1px solid #000000;
+  border-radius: 4px;
+}
+
+.nav-horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-sm {
+  font-size: 0.875rem;
 }

@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Sora } from "next/font/google";
 import "./globals.css";
 import Link from 'next/link';
 import Image from 'next/image';
+import { ThemeProvider } from "./components/ThemeProvider";
+import { ThemeToggle } from "./components/ThemeToggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,6 +13,11 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const sora = Sora({
+  variable: "--font-sora",
   subsets: ["latin"],
 });
 
@@ -39,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "OspinaJuanP Blog",
     description: "Espacio para compartir mi crecimiento en la tecnología.",
-    creator: "@ospinajuanp", // Update this if you have a different handle
+    creator: "@ospinajuanp",
   },
   alternates: {
     canonical: "/",
@@ -52,31 +59,40 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="dark">
+    <html lang="es" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} antialiased min-h-screen flex flex-col`}
       >
-        <header className="py-8">
-          <div className="container flex justify-between items-center">
-            <Link href="/" className="text-lg font-bold tracking-tight flex items-center gap-2">
-              <Image src="/favicon.ico" alt="Logo" width={50} height={50} />
-              ospinajuanp.
-            </Link>
-            <nav>
-              {/* Add navigation items here if needed later */}
-            </nav>
-          </div>
-        </header>
+        <ThemeProvider attribute="class" defaultTheme="dark" themes={['dark', 'secondary']} enableSystem={false}>
+          <header className="py-8">
+            <div className="container flex justify-between items-center">
+              <Link href="/" className="flex items-center gap-1">
+                <Image src="/favicon.ico" alt="Logo" width={50} height={50} className="logo-image" />
+                <div className={`logo-text ${sora.className}`}>
+                  <span className="logo-text-title">
+                    Juan Pablo
+                  </span>
+                  <span className="logo-text-subtitle">
+                    Ospina Restrepo
+                  </span>
+                </div>
+              </Link>
+              <nav className="nav-horizontal">
+                <ThemeToggle />
+              </nav>
+            </div>
+          </header>
 
-        <main className="flex-grow container py-8">
-          {children}
-        </main>
+          <main className="flex-grow container py-8">
+            {children}
+          </main>
 
-        <footer className="py-8 text-center text-sm text-[#a3a3a3]">
-          <div className="container">
-            {new Date().getFullYear()} ospinajuanp. Built with Next.js.
-          </div>
-        </footer>
+          <footer className="py-8 text-center text-sm text-[var(--accent)]">
+            <div className="container">
+              {new Date().getFullYear()} ospinajuanp. Built with Next.js.
+            </div>
+          </footer>
+        </ThemeProvider>
       </body>
     </html>
   );
