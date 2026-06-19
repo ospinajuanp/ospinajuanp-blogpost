@@ -18,31 +18,35 @@ export interface PostData {
 }
 
 export function getSortedPostsData(): PostData[] {
-  // Get file names under /posts
   if (!fs.existsSync(postsDirectory)) {
+    console.warn(`Posts directory does not exist: ${postsDirectory}`);
     return [];
   }
 
   const fileNames = fs.readdirSync(postsDirectory);
-  const allPostsData = fileNames.map((fileName) => {
-    // Remove ".md" from file name to get id
-    const slug = fileName.replace(/\.md$/, '');
+  const allPostsData: PostData[] = [];
 
-    // Read markdown file as string
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
+  for (const fileName of fileNames) {
+    try {
+      const slug = fileName.replace(/\.md$/, '');
+      const fullPath = path.join(postsDirectory, fileName);
+      const fileContents = fs.readFileSync(fullPath, 'utf8');
+      const matterResult = matter(fileContents);
 
-    // Use gray-matter to parse the post metadata section
-    const matterResult = matter(fileContents);
+      allPostsData.push({
+        slug,
+        title: matterResult.data.title || slug,
+        date: matterResult.data.date || new Date().toISOString(),
+        description: matterResult.data.description || '',
+        image: matterResult.data.image,
+        hidden: matterResult.data.hidden,
+        protected: matterResult.data.protected,
+      });
+    } catch (error) {
+      console.error(`Error reading post file ${fileName}:`, error);
+    }
+  }
 
-    // Combine the data with the id
-    return {
-      slug,
-      ...(matterResult.data as { title: string; date: string; description: string; image?: string; hidden?: boolean; protected?: boolean }),
-    };
-  });
-
-  // Sort posts by date
   return allPostsData.sort((a, b) => {
     if (a.date < b.date) {
       return 1;
@@ -54,22 +58,35 @@ export function getSortedPostsData(): PostData[] {
 
 export async function getPostData(slug: string): Promise<PostData> {
   const fullPath = path.join(postsDirectory, `${slug}.md`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
 
-  // Use gray-matter to parse the post metadata section
+  let fileContents: string;
+  try {
+    fileContents = fs.readFileSync(fullPath, 'utf8');
+  } catch {
+    throw new Error(`Failed to read post file: ${slug}`);
+  }
+
   const matterResult = matter(fileContents);
 
-  // Use remark to convert markdown into HTML string
-  const processedContent = await remark()
-    .use(html)
-    .process(matterResult.content);
-  const contentHtml = processedContent.toString();
+  let contentHtml: string;
+  try {
+    const processedContent = await remark()
+      .use(html)
+      .process(matterResult.content);
+    contentHtml = processedContent.toString();
+  } catch {
+    throw new Error(`Failed to process markdown for post: ${slug}`);
+  }
 
-  // Combine the data with the id and contentHtml
   return {
     slug,
     contentHtml,
-    ...(matterResult.data as { title: string; date: string; description: string; image?: string; hidden?: boolean; protected?: boolean }),
+    title: matterResult.data.title || slug,
+    date: matterResult.data.date || new Date().toISOString(),
+    description: matterResult.data.description || '',
+    image: matterResult.data.image,
+    hidden: matterResult.data.hidden,
+    protected: matterResult.data.protected,
   };
 }
 
