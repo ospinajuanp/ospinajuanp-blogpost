@@ -3,8 +3,18 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import { z } from 'zod';
 
 const postsDirectory = path.join(process.cwd(), 'content/posts');
+
+const PostFrontmatterSchema = z.object({
+  title: z.string().optional(),
+  date: z.string().optional(),
+  description: z.string().optional(),
+  image: z.string().optional(),
+  hidden: z.boolean().optional(),
+  protected: z.boolean().optional(),
+});
 
 export interface PostData {
   slug: string;
@@ -32,15 +42,16 @@ export function getSortedPostsData(): PostData[] {
       const fullPath = path.join(postsDirectory, fileName);
       const fileContents = fs.readFileSync(fullPath, 'utf8');
       const matterResult = matter(fileContents);
+      const validatedData = PostFrontmatterSchema.parse(matterResult.data);
 
       allPostsData.push({
         slug,
-        title: matterResult.data.title || slug,
-        date: matterResult.data.date || new Date().toISOString(),
-        description: matterResult.data.description || '',
-        image: matterResult.data.image,
-        hidden: matterResult.data.hidden,
-        protected: matterResult.data.protected,
+        title: validatedData.title || slug,
+        date: validatedData.date || new Date().toISOString(),
+        description: validatedData.description || '',
+        image: validatedData.image,
+        hidden: validatedData.hidden,
+        protected: validatedData.protected,
       });
     } catch (error) {
       console.error(`Error reading post file ${fileName}:`, error);
@@ -67,6 +78,7 @@ export async function getPostData(slug: string): Promise<PostData> {
   }
 
   const matterResult = matter(fileContents);
+  const validatedData = PostFrontmatterSchema.parse(matterResult.data);
 
   let contentHtml: string;
   try {
@@ -81,12 +93,12 @@ export async function getPostData(slug: string): Promise<PostData> {
   return {
     slug,
     contentHtml,
-    title: matterResult.data.title || slug,
-    date: matterResult.data.date || new Date().toISOString(),
-    description: matterResult.data.description || '',
-    image: matterResult.data.image,
-    hidden: matterResult.data.hidden,
-    protected: matterResult.data.protected,
+    title: validatedData.title || slug,
+    date: validatedData.date || new Date().toISOString(),
+    description: validatedData.description || '',
+    image: validatedData.image,
+    hidden: validatedData.hidden,
+    protected: validatedData.protected,
   };
 }
 
