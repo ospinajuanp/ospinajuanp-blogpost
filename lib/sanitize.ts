@@ -1,7 +1,11 @@
+import { JSDOM } from 'jsdom';
 import DOMPurify from 'dompurify';
 
+const window = new JSDOM('').window;
+const DOMPurifyInstance = DOMPurify(window);
+
 export function sanitizeHtml(html: string): string {
-  return DOMPurify.sanitize(html, {
+  return DOMPurifyInstance.sanitize(html, {
     ALLOWED_TAGS: [
       'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
       'p', 'br', 'hr',

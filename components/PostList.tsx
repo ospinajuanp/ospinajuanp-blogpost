@@ -36,7 +36,7 @@ export default function PostList({ posts }: { posts: PostData[] }) {
 
       <div className={styles['posts-wrapper']}>
         {filteredPosts.length === 0 ? (
-          <p className={styles['no-results']}>No se encontraron artículos que coincidan con "{searchQuery}".</p>
+          <p className={styles['no-results']}>No se encontraron artículos que coincidan con &quot;{searchQuery}&quot;.</p>
         ) : (
           <>
             {/* Featured Post */}

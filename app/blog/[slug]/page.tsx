@@ -2,6 +2,7 @@ import { Metadata, ResolvingMetadata } from 'next';
 import { getAllPostSlugs, getPostData } from '../../../lib/posts';
 import PostContent from './content';
 import { SITE_URL } from '../../../lib/config';
+import { sanitizeHtml } from '../../../lib/sanitize';
 
 export async function generateStaticParams() {
     const paths = getAllPostSlugs();
@@ -48,6 +49,7 @@ export async function generateMetadata(
 export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const postData = await getPostData(slug);
+    const sanitizedContent = sanitizeHtml(postData.contentHtml || '');
 
     const jsonLd = {
         '@context': 'https://schema.org',
@@ -69,7 +71,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            <PostContent post={postData} />
+            <PostContent post={{ ...postData, contentHtml: sanitizedContent }} />
         </>
     );
 }

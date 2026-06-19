@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import PasswordProtection from '../../components/PasswordProtection';
 import { PostData } from '../../../lib/posts';
-import { sanitizeHtml } from '../../../lib/sanitize';
 import Link from 'next/link';
 
 export default function PostContent({ post }: { post: PostData }) {
@@ -43,7 +42,7 @@ export default function PostContent({ post }: { post: PostData }) {
             </div>
 
             <div
-                dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.contentHtml || '') }}
+                dangerouslySetInnerHTML={{ __html: post.contentHtml || '' }}
                 className="text-[#e5e5e5]"
             />
         </article>

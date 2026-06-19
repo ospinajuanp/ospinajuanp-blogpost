@@ -19,16 +19,13 @@ Colección de ideas para posts futuros, organizados por área temática. Todos s
 
 ## Tecnología y Programación
 
-| # | Tema |
-|---|------|
-| 1 | **Mi Setup de Desarrollo 2026** - Editor, extensiones, terminal, configuración |
-| 2 | **5 Herramientas que Uso Diariamente y No Pueden Faltar** - Apps que se volvió indispensable |
-| 3 | **Por Qué Elegí Next.js Para Este Blog** - Decisiones técnicas razonadas |
-| 4 | **Git: Comandos que Debería Haber Aprendido Antes** - Errores comunes y lecciones |
-| 5 | **Mi Primera Librería Open Source** - Qué aprendí publicando en npm |
-| 6 | **Cómo Leer Código de Otros Para Aprender** - Estrategia para estudiar proyectos grandes |
-| 7 | **Markdown: Mi Formato Universal de Notas** - Por qué dejo de lado Notion y otras apps |
-| 8 | **Hosting y Dominio: Cómo Mantengo Este Blog Online** - Netlify, dominios, costos |
+| # | Tema | Estado |
+|---|------|--------|
+| 1 | **Mi Setup de Desarrollo 2026** - Editor, extensiones, terminal, configuración | |
+| 2 | **5 Herramientas que Uso Diariamente y No Pueden Faltar** - Apps que se volvió indispensable | |
+| 3 | **Por Qué Elegí Next.js Para Este Blog** - Decisiones técnicas razonadas | |
+| 4 | **Git: Comandos que Debería Haber Aprendido Antes** - Errores comunes y lecciones | |
+| 5 | **Mi Primera Librería Open Source** - Qué aprendí publicando en npm | ✅ Hecho |
 
 ---
 
