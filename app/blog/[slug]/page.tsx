@@ -1,10 +1,10 @@
 import { Metadata, ResolvingMetadata } from 'next';
 import { getAllPostSlugs, getPostData } from '../../../lib/posts';
 import PostContent from './content';
+import { SITE_URL } from '../../../lib/config';
 
 export async function generateStaticParams() {
     const paths = getAllPostSlugs();
-    // Adecuamos el formato de paths de Pages Router a App Router
     return paths.map((path: { params: { slug: string } }) => path.params);
 }
 
@@ -49,5 +49,27 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
     const { slug } = await params;
     const postData = await getPostData(slug);
 
-    return <PostContent post={postData} />;
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: postData.title,
+        description: postData.description,
+        datePublished: postData.date,
+        url: `${SITE_URL}/blog/${slug}`,
+        author: {
+            '@type': 'Person',
+            name: 'OspinaJuanP',
+        },
+        ...(postData.image && { image: postData.image }),
+    };
+
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+            <PostContent post={postData} />
+        </>
+    );
 }
