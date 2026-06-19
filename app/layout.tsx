@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ThemeProvider } from "./components/ThemeProvider";
 import { ThemeToggle } from "./components/ThemeToggle";
+import { SITE_URL, DEFAULT_THEME, THEME_DARK, THEME_SECONDARY } from "../lib/config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,7 +23,7 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://ospinajuanp-blogpost.vercel.app'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "OspinaJuanP Blog",
     template: "%s | OspinaJuanP"
@@ -63,7 +64,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} antialiased min-h-screen flex flex-col`}
       >
-        <ThemeProvider attribute="class" defaultTheme="dark" themes={['dark', 'secondary']} enableSystem={false}>
+        <ThemeProvider attribute="class" defaultTheme={DEFAULT_THEME} themes={[THEME_DARK, THEME_SECONDARY]} enableSystem={false}>
           <header className="py-8">
             <div className="container flex justify-between items-center">
               <Link href="/" className="flex items-center gap-1">
