@@ -1,5 +1,6 @@
-import { Metadata, ResolvingMetadata } from 'next';
-import { getAllPostSlugs, getPostData } from '../../../lib/posts';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { getAllPostSlugs, getPostContentHtml, getPostMeta, isValidSlug } from '../../../lib/posts';
 import PostContent from './content';
 import { SITE_URL } from '../../../lib/config';
 import { sanitizeHtml } from '../../../lib/sanitize';
@@ -10,18 +11,32 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(
-    { params }: { params: Promise<{ slug: string }> },
-    parent: ResolvingMetadata
+    { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
     const { slug } = await params;
-    const postData = await getPostData(slug);
+
+    if (!isValidSlug(slug)) {
+        return { title: 'Post no encontrado', robots: { index: false, follow: false } };
+    }
+
+    let postData;
+    try {
+        postData = await getPostMeta(slug);
+    } catch {
+        return { title: 'Post no encontrado', robots: { index: false, follow: false } };
+    }
+
+    const isProtected = postData.protected === true;
+    const genericTitle = 'Contenido Protegido';
+    const genericDescription = 'Contenido protegido. Se requiere contraseña para visualizarlo.';
 
     return {
-        title: postData.title,
-        description: postData.description,
+        title: isProtected ? genericTitle : postData.title,
+        description: isProtected ? genericDescription : postData.description,
+        robots: isProtected ? { index: false, follow: false } : undefined,
         openGraph: {
-            title: postData.title,
-            description: postData.description,
+            title: isProtected ? genericTitle : postData.title,
+            description: isProtected ? genericDescription : postData.description,
             type: 'article',
             publishedTime: postData.date,
             url: `/blog/${slug}`,
@@ -30,14 +45,14 @@ export async function generateMetadata(
                     url: postData.image,
                     width: 1200,
                     height: 630,
-                    alt: postData.title,
+                    alt: isProtected ? genericTitle : postData.title,
                 }
             ] : undefined,
         },
         twitter: {
             card: 'summary_large_image',
-            title: postData.title,
-            description: postData.description,
+            title: isProtected ? genericTitle : postData.title,
+            description: isProtected ? genericDescription : postData.description,
             images: postData.image ? [postData.image] : undefined,
         },
         alternates: {
@@ -48,21 +63,54 @@ export async function generateMetadata(
 
 export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const postData = await getPostData(slug);
-    const sanitizedContent = sanitizeHtml(postData.contentHtml || '');
+
+    if (!isValidSlug(slug)) {
+        notFound();
+    }
+
+    let postData;
+    try {
+        postData = await getPostMeta(slug);
+    } catch {
+        notFound();
+    }
+
+    const isProtected = postData.protected === true;
+
+    // El contenido de los posts protegidos NO se envía al cliente en el payload inicial.
+    // Se solicita en vivo a través de la server action tras validar la contraseña.
+    let contentHtml: string | undefined;
+    if (!isProtected) {
+        try {
+            contentHtml = sanitizeHtml(await getPostContentHtml(slug));
+        } catch {
+            notFound();
+        }
+    }
+
+    // En posts protegidos ni el título ni la descripción viajan al cliente: solo se
+    // entregan tras validar la contraseña.
+    const clientPost = isProtected
+        ? {
+            ...postData,
+            title: 'Contenido Protegido',
+            description: 'Contenido protegido. Se requiere contraseña para visualizarlo.',
+            image: undefined,
+        }
+        : postData;
 
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
-        headline: postData.title,
-        description: postData.description,
+        headline: isProtected ? 'Contenido Protegido' : postData.title,
+        description: isProtected ? 'Contenido protegido' : postData.description,
         datePublished: postData.date,
         url: `${SITE_URL}/blog/${slug}`,
         author: {
             '@type': 'Person',
             name: 'OspinaJuanP',
         },
-        ...(postData.image && { image: postData.image }),
+        ...(!isProtected && postData.image && { image: postData.image }),
     };
 
     return (
@@ -71,7 +119,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            <PostContent post={{ ...postData, contentHtml: sanitizedContent }} />
+            <PostContent post={{ ...clientPost, contentHtml }} />
         </>
     );
 }

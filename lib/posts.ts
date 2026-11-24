@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 const postsDirectory = path.join(process.cwd(), 'content/posts');
 
-const PostFrontmatterSchema = z.object({
+export const PostFrontmatterSchema = z.object({
   title: z.string().optional(),
   date: z.string().optional(),
   description: z.string().optional(),
@@ -24,7 +24,42 @@ export interface PostData {
   image?: string;
   hidden?: boolean;
   protected?: boolean;
+  modifiedAt?: string;
   contentHtml?: string;
+}
+
+export function isValidSlug(slug: string): boolean {
+  if (!/^[A-Za-z0-9._-]+$/.test(slug)) {
+    return false;
+  }
+  const resolved = path.resolve(postsDirectory, `${slug}.md`);
+  return resolved.startsWith(`${path.resolve(postsDirectory)}${path.sep}`);
+}
+
+function buildPostData(slug: string, data: z.infer<typeof PostFrontmatterSchema>): PostData {
+  return {
+    slug,
+    title: data.title || slug,
+    date: data.date || new Date().toISOString(),
+    description: data.description || '',
+    image: data.image,
+    hidden: data.hidden,
+    protected: data.protected,
+  };
+}
+
+function readFrontmatter(slug: string): z.infer<typeof PostFrontmatterSchema> {
+  const fullPath = path.join(postsDirectory, `${slug}.md`);
+
+  let fileContents: string;
+  try {
+    fileContents = fs.readFileSync(fullPath, 'utf8');
+  } catch {
+    throw new Error(`Failed to read post file: ${slug}`);
+  }
+
+  const matterResult = matter(fileContents);
+  return PostFrontmatterSchema.parse(matterResult.data);
 }
 
 export function getSortedPostsData(): PostData[] {
@@ -43,16 +78,15 @@ export function getSortedPostsData(): PostData[] {
       const fileContents = fs.readFileSync(fullPath, 'utf8');
       const matterResult = matter(fileContents);
       const validatedData = PostFrontmatterSchema.parse(matterResult.data);
+      const post = buildPostData(slug, validatedData);
 
-      allPostsData.push({
-        slug,
-        title: validatedData.title || slug,
-        date: validatedData.date || new Date().toISOString(),
-        description: validatedData.description || '',
-        image: validatedData.image,
-        hidden: validatedData.hidden,
-        protected: validatedData.protected,
-      });
+      try {
+        post.modifiedAt = fs.statSync(fullPath).mtime.toISOString();
+      } catch {
+        post.modifiedAt = post.date;
+      }
+
+      allPostsData.push(post);
     } catch (error) {
       console.error(`Error reading post file ${fileName}:`, error);
     }
@@ -67,7 +101,23 @@ export function getSortedPostsData(): PostData[] {
   });
 }
 
-export async function getPostData(slug: string): Promise<PostData> {
+export function getPublicPostsData(): PostData[] {
+  return getSortedPostsData().filter(post => !post.hidden && !post.protected);
+}
+
+export async function getPostMeta(slug: string): Promise<PostData> {
+  if (!isValidSlug(slug)) {
+    throw new Error(`Invalid post slug: ${slug}`);
+  }
+
+  return buildPostData(slug, readFrontmatter(slug));
+}
+
+export async function getPostContentHtml(slug: string): Promise<string> {
+  if (!isValidSlug(slug)) {
+    throw new Error(`Invalid post slug: ${slug}`);
+  }
+
   const fullPath = path.join(postsDirectory, `${slug}.md`);
 
   let fileContents: string;
@@ -78,7 +128,6 @@ export async function getPostData(slug: string): Promise<PostData> {
   }
 
   const matterResult = matter(fileContents);
-  const validatedData = PostFrontmatterSchema.parse(matterResult.data);
 
   let contentHtml: string;
   try {
@@ -90,16 +139,7 @@ export async function getPostData(slug: string): Promise<PostData> {
     throw new Error(`Failed to process markdown for post: ${slug}`);
   }
 
-  return {
-    slug,
-    contentHtml,
-    title: validatedData.title || slug,
-    date: validatedData.date || new Date().toISOString(),
-    description: validatedData.description || '',
-    image: validatedData.image,
-    hidden: validatedData.hidden,
-    protected: validatedData.protected,
-  };
+  return contentHtml;
 }
 
 export function getAllPostSlugs() {

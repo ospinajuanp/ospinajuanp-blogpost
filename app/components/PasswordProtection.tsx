@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { verifyPostPassword } from '../actions';
-import { useRouter } from 'next/navigation';
 
-export default function PasswordProtection({ onUnlock }: { onUnlock: () => void }) {
+interface PasswordProtectionProps {
+    onSubmit: (password: string) => Promise<boolean>;
+}
+
+export default function PasswordProtection({ onSubmit }: PasswordProtectionProps) {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -14,11 +16,9 @@ export default function PasswordProtection({ onUnlock }: { onUnlock: () => void 
         setLoading(true);
         setError(false);
 
-        const isValid = await verifyPostPassword(password);
+        const isValid = await onSubmit(password);
 
-        if (isValid) {
-            onUnlock();
-        } else {
+        if (!isValid) {
             setError(true);
             setLoading(false);
         }

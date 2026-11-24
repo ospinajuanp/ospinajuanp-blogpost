@@ -3,14 +3,33 @@
 import { useState } from 'react';
 import PasswordProtection from '../../components/PasswordProtection';
 import { PostData } from '../../../lib/posts';
+import { getProtectedPostContent } from '../../actions';
 import Link from 'next/link';
 
 export default function PostContent({ post }: { post: PostData }) {
     const [isUnlocked, setIsUnlocked] = useState(!post.protected);
+    const [unlockedContent, setUnlockedContent] = useState<string | null>(null);
+    const [unlockedTitle, setUnlockedTitle] = useState<string | null>(null);
+
+    const handleUnlock = async (password: string): Promise<boolean> => {
+        const payload = await getProtectedPostContent(post.slug, password);
+
+        if (!payload) {
+            return false;
+        }
+
+        setUnlockedContent(payload.contentHtml);
+        setUnlockedTitle(payload.title);
+        setIsUnlocked(true);
+        return true;
+    };
 
     if (!isUnlocked) {
-        return <PasswordProtection onUnlock={() => setIsUnlocked(true)} />;
+        return <PasswordProtection onSubmit={handleUnlock} />;
     }
+
+    const contentHtml = post.protected ? unlockedContent : post.contentHtml;
+    const title = post.protected ? (unlockedTitle ?? post.title) : post.title;
 
     return (
         <article className="prose prose-lg prose-invert mx-auto">
@@ -23,13 +42,13 @@ export default function PostContent({ post }: { post: PostData }) {
                     <time>{post.date}</time>
                 </div>
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-white">
-                    {post.title}
+                    {title}
                 </h1>
                 {post.image && (
                     <div className="relative w-full mb-8 overflow-hidden rounded-xl bg-[#262626]">
                         <img
                             src={post.image}
-                            alt={post.title}
+                            alt={title}
                             className="w-full h-auto"
                         />
                     </div>
@@ -42,7 +61,7 @@ export default function PostContent({ post }: { post: PostData }) {
             </div>
 
             <div
-                dangerouslySetInnerHTML={{ __html: post.contentHtml || '' }}
+                dangerouslySetInnerHTML={{ __html: contentHtml || '' }}
                 className="text-[#e5e5e5]"
             />
         </article>
