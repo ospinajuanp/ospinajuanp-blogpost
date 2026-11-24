@@ -4,8 +4,24 @@ import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
 import { z } from 'zod';
+import { PILLARS } from './config';
 
 const postsDirectory = path.join(process.cwd(), 'content/posts');
+
+const PILLAR_IDS = PILLARS.map(pillar => pillar.id);
+
+const TagsSchema = z.preprocess(
+  (value) => {
+    if (typeof value === 'string') {
+      return value.split(',').map(tag => tag.trim()).filter(Boolean);
+    }
+    if (Array.isArray(value)) {
+      return value.map(tag => String(tag).trim()).filter(Boolean);
+    }
+    return value;
+  },
+  z.array(z.string()).optional()
+);
 
 export const PostFrontmatterSchema = z.object({
   title: z.string().optional(),
@@ -14,6 +30,9 @@ export const PostFrontmatterSchema = z.object({
   image: z.string().optional(),
   hidden: z.boolean().optional(),
   protected: z.boolean().optional(),
+  pilar: z.enum(PILLAR_IDS as [string, ...string[]]).optional(),
+  tags: TagsSchema,
+  series: z.string().optional(),
 });
 
 export interface PostData {
@@ -24,8 +43,22 @@ export interface PostData {
   image?: string;
   hidden?: boolean;
   protected?: boolean;
+  pilar?: string;
+  tags?: string[];
+  series?: string;
   modifiedAt?: string;
   contentHtml?: string;
+}
+
+export interface AdjacentPosts {
+  previous: PostData | null;
+  next: PostData | null;
+}
+
+export interface SeriesContext {
+  name: string;
+  index: number;
+  total: number;
 }
 
 export function isValidSlug(slug: string): boolean {
@@ -45,6 +78,9 @@ function buildPostData(slug: string, data: z.infer<typeof PostFrontmatterSchema>
     image: data.image,
     hidden: data.hidden,
     protected: data.protected,
+    pilar: data.pilar,
+    tags: data.tags,
+    series: data.series,
   };
 }
 
@@ -140,6 +176,45 @@ export async function getPostContentHtml(slug: string): Promise<string> {
   }
 
   return contentHtml;
+}
+
+export function getAdjacentPosts(slug: string): AdjacentPosts {
+  const posts = getPublicPostsData();
+  const index = posts.findIndex(post => post.slug === slug);
+
+  if (index === -1) {
+    return { previous: null, next: null };
+  }
+
+  return {
+    previous: index + 1 < posts.length ? posts[index + 1] : null,
+    next: index > 0 ? posts[index - 1] : null,
+  };
+}
+
+export function getSeriesContext(slug: string): SeriesContext | null {
+  const posts = getPublicPostsData();
+  const current = posts.find(post => post.slug === slug);
+
+  if (!current || !current.series) {
+    return null;
+  }
+
+  const siblings = posts
+    .filter(post => post.series === current.series)
+    .sort((a, b) => (a.date < b.date ? -1 : 1));
+
+  const index = siblings.findIndex(post => post.slug === slug);
+
+  if (index === -1) {
+    return null;
+  }
+
+  return {
+    name: current.series,
+    index: index + 1,
+    total: siblings.length,
+  };
 }
 
 export function getAllPostSlugs() {

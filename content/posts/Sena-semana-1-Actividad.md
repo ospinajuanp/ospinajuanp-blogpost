@@ -6,6 +6,8 @@ hidden: false
 image: "/sena/sena-semana-1-Actividad.png"
 protected: true
 title: "Semana 1 - Actividad 1 del SENA"
+pilar: oficios
+tags: [sena]
 ---
 
 # 📥 Descarga y entendimiento de la actividad

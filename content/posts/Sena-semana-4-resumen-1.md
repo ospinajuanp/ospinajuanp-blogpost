@@ -5,6 +5,8 @@ description: "Resumen detallado sobre la estructura técnica de proyectos, está
 image: "/sena/Sena-semana-4-resumen-1.png"
 protected: true
 hidden: false
+pilar: oficios
+tags: [sena, apa]
 ---
 
 # 📌 Resumen Sesión: Estructura y Rigor Académico

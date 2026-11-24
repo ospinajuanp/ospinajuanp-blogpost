@@ -5,6 +5,9 @@ description: "Construí una plataforma multi-tenant para empresas y descubrí qu
 image: "https://picsum.photos/seed/zentral-edge/1200/600"
 protected: false
 hidden: false
+pilar: construccion
+tags: [zentral, edge, multi-tenancy]
+series: Zentral
 ---
 
 # 🏦 Zentral y la mentira más peligrosa de un proyecto

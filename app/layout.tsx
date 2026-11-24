@@ -28,8 +28,8 @@ export const metadata: Metadata = {
     default: "OspinaJuanP Blog",
     template: "%s | OspinaJuanP"
   },
-  description: "Este blog nace como un espacio para compartir mi crecimiento en la tecnología. Apuntes del SENA, conceptos y construcción de conocimiento en público.",
-  keywords: ["Next.js", "Blog", "SENA", "Tecnología", "Desarrollo Web", "OspinaJuanP"],
+  description: "Construcción en público, lecturas y temas personales. Aprendo, documento y construyo conocimiento en público.",
+  keywords: ["Next.js", "Blog", "Tecnología", "Desarrollo Web", "OspinaJuanP", "Construcción en público", "Desarrollo Full Stack"],
   authors: [{ name: "OspinaJuanP" }],
   creator: "OspinaJuanP",
   verification: {
@@ -40,17 +40,20 @@ export const metadata: Metadata = {
     locale: "es_CO",
     url: "/",
     title: "OspinaJuanP Blog",
-    description: "Espacio para compartir mi crecimiento en la tecnología. Apuntes, conceptos y construcción de conocimiento en público.",
+    description: "Construcción en público, lecturas y temas personales. Aprendo, documento y construyo conocimiento en público.",
     siteName: "OspinaJuanP Blog",
   },
   twitter: {
     card: "summary_large_image",
     title: "OspinaJuanP Blog",
-    description: "Espacio para compartir mi crecimiento en la tecnología.",
+    description: "Construcción en público, lecturas y temas personales.",
     creator: "@ospinajuanp",
   },
   alternates: {
-    canonical: "/",
+    canonical: '/',
+    types: {
+      'application/rss+xml': `${SITE_URL}/feed.xml`,
+    },
   }
 };
 

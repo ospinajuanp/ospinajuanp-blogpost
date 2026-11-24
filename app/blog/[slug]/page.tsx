@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getAllPostSlugs, getPostContentHtml, getPostMeta, isValidSlug } from '../../../lib/posts';
+import { getAdjacentPosts, getAllPostSlugs, getPostContentHtml, getPostMeta, getSeriesContext, isValidSlug, PostData } from '../../../lib/posts';
 import PostContent from './content';
 import { SITE_URL } from '../../../lib/config';
 import { sanitizeHtml } from '../../../lib/sanitize';
@@ -88,9 +88,12 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
         }
     }
 
+    const adjacent = getAdjacentPosts(slug);
+    const series = getSeriesContext(slug);
+
     // En posts protegidos ni el título ni la descripción viajan al cliente: solo se
     // entregan tras validar la contraseña.
-    const clientPost = isProtected
+    const clientPost: PostData = isProtected
         ? {
             ...postData,
             title: 'Contenido Protegido',
@@ -119,7 +122,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            <PostContent post={{ ...clientPost, contentHtml }} />
+            <PostContent post={{ ...clientPost, contentHtml }} adjacent={adjacent} series={series} />
         </>
     );
 }

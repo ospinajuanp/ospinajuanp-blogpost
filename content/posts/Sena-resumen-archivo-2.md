@@ -5,6 +5,8 @@ description: "Guía práctica sobre cómo asegurar que lo que construimos es rea
 image: "/sena/Sena-resumen-archivo-2.png"
 protected: true
 hidden: false
+pilar: oficios
+tags: [sena, requerimientos]
 ---
 
 # 🚀 ¿Cómo asegurar que el proyecto no falle?

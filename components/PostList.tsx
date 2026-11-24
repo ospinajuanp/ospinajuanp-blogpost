@@ -1,19 +1,30 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { PostData } from '../lib/posts';
+import { getPillarLabel, PILLARS } from '../lib/config';
 import styles from './PostList.module.css';
 
 export default function PostList({ posts }: { posts: PostData[] }) {
     const [searchQuery, setSearchQuery] = useState('');
+    const [activePillar, setActivePillar] = useState<string | null>(null);
+
+    const availablePillars = useMemo(() => {
+        const used = new Set(posts.map(post => post.pilar).filter((pilar): pilar is string => Boolean(pilar)));
+        return PILLARS.filter(pillar => used.has(pillar.id));
+    }, [posts]);
 
     const filteredPosts = posts.filter(post => {
         const searchLower = searchQuery.toLowerCase();
-        return (
+        const matchesSearch =
             post.title.toLowerCase().includes(searchLower) ||
-            post.description.toLowerCase().includes(searchLower)
-        );
+            post.description.toLowerCase().includes(searchLower) ||
+            (post.tags ?? []).some(tag => tag.toLowerCase().includes(searchLower));
+
+        const matchesPillar = activePillar === null || post.pilar === activePillar;
+
+        return matchesSearch && matchesPillar;
     });
 
     return (
@@ -34,6 +45,29 @@ export default function PostList({ posts }: { posts: PostData[] }) {
                 />
             </div>
 
+            {/* Filtros por pilar */}
+            {availablePillars.length > 0 && (
+                <div className={styles['pillar-filters']} role="group" aria-label="Filtrar por pilar">
+                    <button
+                        type="button"
+                        className={`${styles['pillar-chip']} ${activePillar === null ? styles['pillar-chip-active'] : ''}`}
+                        onClick={() => setActivePillar(null)}
+                    >
+                        Todos
+                    </button>
+                    {availablePillars.map(pillar => (
+                        <button
+                            key={pillar.id}
+                            type="button"
+                            className={`${styles['pillar-chip']} ${activePillar === pillar.id ? styles['pillar-chip-active'] : ''}`}
+                            onClick={() => setActivePillar(pillar.id)}
+                        >
+                            {pillar.emoji} {pillar.label}
+                        </button>
+                    ))}
+                </div>
+            )}
+
             <div className={styles['posts-wrapper']}>
                 {filteredPosts.length === 0 ? (
                     <p className={styles['no-results']}>No se encontraron artículos que coincidan con &quot;{searchQuery}&quot;.</p>
@@ -42,7 +76,7 @@ export default function PostList({ posts }: { posts: PostData[] }) {
                         {/* Featured Post */}
                         {filteredPosts.length > 0 && (
                             <div className={styles['featured-posts']}>
-                                {filteredPosts.slice(0, 1).map(({ slug, date, title, description, image }) => (
+                                {filteredPosts.slice(0, 1).map(({ slug, date, title, description, image, pilar, tags }) => (
                                     <div key={slug} className="group">
                                         <Link href={`/blog/${slug}`} className={styles['post-link']}>
                                             <div className={styles['post-content']}>
@@ -62,6 +96,14 @@ export default function PostList({ posts }: { posts: PostData[] }) {
                                                     <h2 className={styles['post-title']}>
                                                         {title}
                                                     </h2>
+                                                    {(pilar || (tags && tags.length > 0)) && (
+                                                        <div className={styles['post-tags']}>
+                                                            {pilar && <span className={styles['post-tag']}>{getPillarLabel(pilar)}</span>}
+                                                            {tags?.map(tag => (
+                                                                <span key={tag} className={styles['post-tag']}>#{tag}</span>
+                                                            ))}
+                                                        </div>
+                                                    )}
                                                     <p className={styles['post-description']}>
                                                         {description}
                                                     </p>
@@ -76,7 +118,7 @@ export default function PostList({ posts }: { posts: PostData[] }) {
                         {/* Grid Posts */}
                         {filteredPosts.length > 1 && (
                             <ul className={styles['grid-posts']}>
-                                {filteredPosts.slice(1).map(({ slug, date, title, description, image }) => (
+                                {filteredPosts.slice(1).map(({ slug, date, title, description, image, pilar, tags }) => (
                                     <li key={slug} className="group" style={{ display: 'flex' }}>
                                         <Link href={`/blog/${slug}`} className={styles['post-link']}>
                                             <div className={styles['post-content']}>
@@ -96,6 +138,14 @@ export default function PostList({ posts }: { posts: PostData[] }) {
                                                     <h2 className={`${styles['post-title']} ${styles['post-title-small']}`}>
                                                         {title}
                                                     </h2>
+                                                    {(pilar || (tags && tags.length > 0)) && (
+                                                        <div className={styles['post-tags']}>
+                                                            {pilar && <span className={styles['post-tag']}>{getPillarLabel(pilar)}</span>}
+                                                            {tags?.map(tag => (
+                                                                <span key={tag} className={styles['post-tag']}>#{tag}</span>
+                                                            ))}
+                                                        </div>
+                                                    )}
                                                     <p className={`${styles['post-description']} ${styles['post-description-small']}`}>
                                                         {description}
                                                     </p>

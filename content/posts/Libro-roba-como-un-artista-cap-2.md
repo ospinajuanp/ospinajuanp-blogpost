@@ -5,6 +5,9 @@ description: "Reflexión sobre cómo la identidad y el estilo propio se descubre
 image: "/libro/Libro-roba-como-un-artista-cap-2.png"
 protected: false
 hidden: false
+pilar: lecturas
+tags: [creatividad, libros]
+series: Roba como un artista
 ---
 
 # 🚀 La claridad viene de la acción

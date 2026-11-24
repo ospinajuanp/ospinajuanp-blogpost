@@ -5,6 +5,9 @@ description: "Cuando subes una foto de un comprobante en Zentral, no la mira un 
 image: "/post/central-ocr.jpg"
 protected: false
 hidden: false
+pilar: construccion
+tags: [zentral, ocr, ia]
+series: Zentral
 ---
 
 # 🧾 Leer un comprobante con dos cerebros

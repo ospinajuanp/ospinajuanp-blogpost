@@ -5,6 +5,8 @@ description: "¿Alguna vez te has preguntado por qué algunas aplicaciones se si
 image: "/post/Adn-sistema-Requerimientos.png"
 protected: false
 hidden: false
+pilar: oficios
+tags: [requerimientos, ingenieria]
 ---
 
 # 📌 El Arte de Pedir Software: Requerimientos Funcionales y No Funcionales

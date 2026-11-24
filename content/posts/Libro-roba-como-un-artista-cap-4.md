@@ -5,6 +5,9 @@ description: "Descubre por qué alejarte de la pantalla es vital para que tus id
 image: "/libro/Libro-roba-como-un-artista-cap-4.png"
 protected: false
 hidden: false
+pilar: lecturas
+tags: [creatividad, libros]
+series: Roba como un artista
 ---
 
 # 🖐️ El cuerpo necesita participar en el proceso creativo

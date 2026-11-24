@@ -1,5 +1,6 @@
 import { getPublicPostsData } from '../lib/posts';
 import PostList from '../components/PostList';
+import { PILLARS } from '../lib/config';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -10,9 +11,21 @@ export default function Home() {
             <div className={styles['page-container']}>
                 <h1 className={styles['page-title']}>Blog</h1>
                 <p className={styles['page-description']}>
-                    Este blog nace como un espacio para compartir mi crecimiento en el mundo de la tecnología. Aquí encontrarás contenido sobre herramientas, conceptos y tendencias del sector, pero también mis apuntes personales de cada clase que voy desarrollando en mi formación tecnológica en el SENA.<br /><br />
+                    Escribo sobre lo que construyo, lo que leo y lo que me cuesta. Acá van los proyectos
+                    que abro en público, las lecturas que me cambian la forma de pensar y los temas
+                    personales que prefiero contarle a alguien antes que a un(Thread) de LinkedIn.
+                    <br /><br />
                     La idea es aprender, documentar y construir conocimiento en público.
                 </p>
+
+                <ul className={styles['pillar-list']}>
+                    {PILLARS.map(pillar => (
+                        <li key={pillar.id} className={styles['pillar-item']}>
+                            <span className={styles['pillar-emoji']}>{pillar.emoji}</span>
+                            {pillar.label}
+                        </li>
+                    ))}
+                </ul>
 
                 {/* Enlaces Sociales / Perfil */}
                 <div className={styles['social-links']}>
@@ -50,6 +63,16 @@ export default function Home() {
                             <path d="M12 .3a12 12 0 00-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.4-.5-1.6.2-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 016 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.1.9 2.3v3.3c0 .3.1.7.8.6A12 12 0 0012 .3z" />
                         </svg>
                         <span>GitHub</span>
+                    </a>
+
+                    <a
+                        href="/feed.xml"
+                        className={styles['social-link']}
+                    >
+                        <svg viewBox="0 0 24 24" className="icon-stroke">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 11a9 9 0 019 9M4 4a16 16 0 0116 16" />
+                        </svg>
+                        <span>RSS</span>
                     </a>
                 </div>
             </div>

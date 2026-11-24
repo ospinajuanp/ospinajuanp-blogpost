@@ -5,6 +5,8 @@ description: "Un recorrido por los 3 años de evolución de mi librería reset-c
 image: "/post/mi-primera-libreria-open-source.png"
 protected: false
 hidden: false
+pilar: construccion
+tags: [open-source, npm]
 ---
 
 # 📦 Mi Primera Librería Open Source

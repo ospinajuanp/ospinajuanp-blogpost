@@ -5,6 +5,9 @@ description: "Sobre la importancia de crear las herramientas, historias o soluci
 image: "/libro/Libro-roba-como-un-artista-cap-3.png"
 protected: false
 hidden: false
+pilar: lecturas
+tags: [creatividad, libros]
+series: Roba como un artista
 ---
 
 # ✍️ Crea lo que tú quieres usar

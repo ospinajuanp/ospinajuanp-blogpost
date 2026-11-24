@@ -5,6 +5,8 @@ description: "Cómo transformé un celular viejo en un panel de control para OBS
 image: "/post/macroboard.jpg"
 protected: false
 hidden: false
+pilar: construccion
+tags: [proyectos, hardware]
 ---
 
 # 🎮 De Celular Viejo a Stream Deck

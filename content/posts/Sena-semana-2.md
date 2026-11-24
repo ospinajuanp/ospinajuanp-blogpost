@@ -5,6 +5,8 @@ description: "Explicación de la sesión sobre software, servicios de internet y
 image: "/sena/Sena-semana-2.png"
 protected: true
 hidden: false
+pilar: oficios
+tags: [sena]
 ---
 
 # 📌 Sesión 19 Feb - Temas vistos

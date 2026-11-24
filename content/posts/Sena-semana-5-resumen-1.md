@@ -5,6 +5,8 @@ description: "Guía técnica sobre técnicas de licitación de requisitos: Entre
 image: "/sena/Sena-semana-5-resumen-1.png"
 protected: true
 hidden: false
+pilar: oficios
+tags: [sena, requerimientos]
 ---
 
 # 📊 Ingeniería de Requisitos: ¿Cómo obtener la información?

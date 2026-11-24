@@ -5,6 +5,9 @@ description: "Análisis sobre la importancia de las influencias y cómo la verda
 image: "/libro/Libro-roba-como-un-artista-cap-1.jpg"
 protected: false
 hidden: false
+pilar: lecturas
+tags: [creatividad, libros]
+series: Roba como un artista
 ---
 
 # 🎨 Nada es 100% original

@@ -5,6 +5,8 @@ description: "Resumen ejecutivo sobre hardware, software, internet y herramienta
 image: "/sena/Sena-resumen-archivo-1.png"
 protected: true
 hidden: false
+pilar: oficios
+tags: [sena]
 ---
 
 # 📌 Introducción a las TIC

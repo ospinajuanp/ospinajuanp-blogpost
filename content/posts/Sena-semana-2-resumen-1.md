@@ -5,6 +5,8 @@ description: "Resumen: Welcome: WH questions, pronombres, adjetivos posesivos, p
 image: "/sena/Sena-semana-2-resumen-1.png"
 protected: true
 hidden: false
+pilar: oficios
+tags: [sena, ingles]
 ---
 
 # 📌 Introducción a la Actividad 1

@@ -5,6 +5,8 @@ description: "Reflexión sobre la importancia de construir una marca personal s�
 image: "/post/Marca-Personal.png"
 protected: false
 hidden: false
+pilar: construccion
+tags: [marca-personal]
 ---
 
 # 🚀 ¿Por qué todos mis proyectos llevan el sello ospinajuanp?

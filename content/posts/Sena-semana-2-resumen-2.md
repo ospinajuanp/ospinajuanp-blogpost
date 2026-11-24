@@ -5,6 +5,8 @@ description: "Resumen: How often do you study English?: Rutinas diarias, preposi
 image: "/sena/Sena-semana-2-resumen-2.png"
 protected: true
 hidden: false
+pilar: oficios
+tags: [sena, ingles]
 ---
 
 # 📅 Rutinas Diarias y Presente Simple

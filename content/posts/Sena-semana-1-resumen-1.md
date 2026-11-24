@@ -5,6 +5,8 @@ description: "Resumen de la primera sesión del SENA (12/02/2026). Introducción
 image: "/sena/Sena-semana-1-resumen-1.jpg"
 protected: true
 hidden: false
+pilar: oficios
+tags: [sena]
 ---
 
 # 📌 Resumen sesión 12/02/2026

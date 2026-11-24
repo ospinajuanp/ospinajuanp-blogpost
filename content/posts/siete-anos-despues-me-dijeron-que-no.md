@@ -5,6 +5,8 @@ description: "Me buscaron para volver a trabajar con ellos, me hicieron pasar un
 image: "/post/anos.jpg"
 protected: false
 hidden: false
+pilar: carrera
+tags: [empleo, proceso-de-seleccion]
 ---
 
 # 🎯 La llamada que empezó con un "sí"
