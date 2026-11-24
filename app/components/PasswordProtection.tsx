@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import styles from './PasswordProtection.module.css';
+
+const ERROR_ID = 'password-protection-error';
 
 interface PasswordProtectionProps {
     onSubmit: (password: string) => Promise<boolean>;
@@ -25,29 +28,32 @@ export default function PasswordProtection({ onSubmit }: PasswordProtectionProps
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-[50vh] text-center space-y-6">
-            <div className="space-y-2">
-                <h1 className="text-2xl font-bold text-white">Contenido Protegido</h1>
-                <p className="text-[#a3a3a3]">Este post requiere una clave de acceso para ser visualizado.</p>
+        <div className={styles.wrapper}>
+            <div className={styles.intro}>
+                <h1 className={styles.title}>Contenido protegido</h1>
+                <p className={styles.description}>
+                    Este post requiere una clave de acceso para ser visualizado.
+                </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full max-w-sm">
+            <form onSubmit={handleSubmit} className={styles.form}>
                 <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Ingresa la clave..."
-                    className="bg-[#1a1a1a] border border-[#333] rounded px-4 py-2 text-white focus:outline-none focus:border-white transition-colors"
+                    aria-label="Clave de acceso"
+                    aria-invalid={error}
+                    aria-describedby={error ? ERROR_ID : undefined}
+                    className={styles.input}
                     autoFocus
                 />
                 {error && (
-                    <p className="text-red-400 text-sm">Clave incorrecta. Inténtalo de nuevo.</p>
+                    <p id={ERROR_ID} role="alert" className={styles.error}>
+                        Clave incorrecta. Inténtalo de nuevo.
+                    </p>
                 )}
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="bg-white text-black font-medium py-2 px-4 rounded hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
+                <button type="submit" disabled={loading} aria-busy={loading} className={styles.button}>
                     {loading ? 'Verificando...' : 'Desbloquear'}
                 </button>
             </form>

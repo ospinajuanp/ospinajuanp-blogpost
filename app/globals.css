@@ -2,29 +2,42 @@
   --background: #0f0f0f;
   --foreground: #e5e5e5;
   --text-muted: #a3a3a3;
-  --accent: #a3a3a3;
+  --accent: #e5e5e5;
   --link-hover: #ffffff;
   --border: #333333;
   --card-bg: #111111;
   --card-hover: #222222;
+  --danger: #f87171;
 }
 
 .secondary {
   --background: #d8d2c4;
   --foreground: #1f2a30;
   --text-muted: #3a4a52;
-  --accent: #ffffff;
-  --link-hover: #0a0a0a;
-  --border: #b8b2a4;
+  --accent: #1f2a30;
+  --link-hover: #000000;
+  --border: #9c9484;
   --card-bg: #d0cabc;
   --card-hover: #c8c2b4;
+  --danger: #8c2f2f;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--card-hover);
+  color: var(--foreground);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 /* Custom Component Classes (replaces inline styles & Tailwind) */
@@ -35,30 +48,37 @@ body {
 }
 
 .logo-text-title {
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  line-height: 1.1;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
   color: var(--foreground);
 }
 
 .logo-text-subtitle {
+  font-size: 0.8125rem;
   font-weight: 400;
-  letter-spacing: 0.02em;
-  line-height: 1.1;
-  color: var(--foreground);
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  color: var(--text-muted);
 }
 
 .theme-toggle {
   background: transparent;
-  border: 1px solid var(--accent);
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   padding: 0.5rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--foreground);
+  color: var(--text-muted);
   transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--foreground);
+  border-color: var(--accent);
 }
 
 h1,
@@ -69,7 +89,7 @@ h5,
 h6 {
   font-weight: 600;
   letter-spacing: -0.025em;
-  color: #ffffff;
+  color: var(--foreground);
 }
 
 a {
@@ -87,8 +107,10 @@ a:hover {
 .container {
   max-width: 42rem;
   /* approx 672px */
+  width: 100%;
   margin: 0 auto;
   padding: 0 1.5rem;
+  box-sizing: border-box;
 }
 
 /* Layout Utilities (replacing Tailwind) */
@@ -121,7 +143,7 @@ a:hover {
 }
 
 .logo-image {
-  border: 1px solid #000000;
+  border: 1px solid var(--border);
   border-radius: 4px;
 }
 
@@ -151,19 +173,4 @@ a:hover {
 
 .text-sm {
   font-size: 0.875rem;
-}
-
-/* Blog Post Image Fixes */
-.prose img {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 2rem auto;
-  border-radius: 0.75rem;
-}
-
-/* Ensure the prose container itself doesn't overflow */
-.prose {
-  max-width: 100% !important;
 }

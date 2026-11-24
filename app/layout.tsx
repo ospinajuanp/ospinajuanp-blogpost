@@ -91,7 +91,7 @@ export default function RootLayout({
             {children}
           </main>
 
-          <footer className="py-8 text-center text-sm text-[var(--accent)]">
+          <footer className="py-8 text-center text-sm text-[var(--text-muted)]">
             <div className="container">
               {new Date().getFullYear()} ospinajuanp. Built with Next.js.
             </div>

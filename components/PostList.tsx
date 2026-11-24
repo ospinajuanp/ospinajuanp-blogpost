@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { PostData } from '../lib/posts';
 import { getPillarLabel, PILLARS } from '../lib/config';
+import { formatDate, formatTag } from '../lib/format';
 import styles from './PostList.module.css';
 
 export default function PostList({ posts }: { posts: PostData[] }) {
@@ -29,22 +30,6 @@ export default function PostList({ posts }: { posts: PostData[] }) {
 
     return (
         <div className={styles['post-list-container']}>
-            {/* Buscador */}
-            <div className={styles['search-container']}>
-                <div className={styles['search-icon-wrapper']}>
-                    <svg className={styles['search-icon']} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </div>
-                <input
-                    type="search"
-                    placeholder="Buscar artículos por título o descripción..."
-                    className={styles['search-input']}
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                />
-            </div>
-
             {/* Filtros por pilar */}
             {availablePillars.length > 0 && (
                 <div className={styles['pillar-filters']} role="group" aria-label="Filtrar por pilar">
@@ -67,6 +52,22 @@ export default function PostList({ posts }: { posts: PostData[] }) {
                     ))}
                 </div>
             )}
+
+            {/* Buscador */}
+            <div className={styles['search-container']}>
+                <div className={styles['search-icon-wrapper']}>
+                    <svg className={styles['search-icon']} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+                <input
+                    type="search"
+                    placeholder="Buscar artículos por título o descripción..."
+                    className={styles['search-input']}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+            </div>
 
             <div className={styles['posts-wrapper']}>
                 {filteredPosts.length === 0 ? (
@@ -91,7 +92,7 @@ export default function PostList({ posts }: { posts: PostData[] }) {
                                                 )}
                                                 <div className={styles['post-meta']}>
                                                     <span className={styles['post-date']}>
-                                                        {date}
+                                                        {formatDate(date, 'short')}
                                                     </span>
                                                     <h2 className={styles['post-title']}>
                                                         {title}
@@ -100,7 +101,7 @@ export default function PostList({ posts }: { posts: PostData[] }) {
                                                         <div className={styles['post-tags']}>
                                                             {pilar && <span className={styles['post-tag']}>{getPillarLabel(pilar)}</span>}
                                                             {tags?.map(tag => (
-                                                                <span key={tag} className={styles['post-tag']}>#{tag}</span>
+                                                                <span key={tag} className={styles['post-tag']}>{formatTag(tag)}</span>
                                                             ))}
                                                         </div>
                                                     )}
@@ -133,7 +134,7 @@ export default function PostList({ posts }: { posts: PostData[] }) {
                                                 )}
                                                 <div className={styles['post-meta']}>
                                                     <span className={styles['post-date']}>
-                                                        {date}
+                                                        {formatDate(date, 'short')}
                                                     </span>
                                                     <h2 className={`${styles['post-title']} ${styles['post-title-small']}`}>
                                                         {title}
@@ -142,7 +143,7 @@ export default function PostList({ posts }: { posts: PostData[] }) {
                                                         <div className={styles['post-tags']}>
                                                             {pilar && <span className={styles['post-tag']}>{getPillarLabel(pilar)}</span>}
                                                             {tags?.map(tag => (
-                                                                <span key={tag} className={styles['post-tag']}>#{tag}</span>
+                                                                <span key={tag} className={styles['post-tag']}>{formatTag(tag)}</span>
                                                             ))}
                                                         </div>
                                                     )}

@@ -1,6 +1,5 @@
 import { getPublicPostsData } from '../lib/posts';
 import PostList from '../components/PostList';
-import { PILLARS } from '../lib/config';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -13,19 +12,10 @@ export default function Home() {
                 <p className={styles['page-description']}>
                     Escribo sobre lo que construyo, lo que leo y lo que me cuesta. Acá van los proyectos
                     que abro en público, las lecturas que me cambian la forma de pensar y los temas
-                    personales que prefiero contarle a alguien antes que a un(Thread) de LinkedIn.
+                    personales que prefiero contarle a alguien antes que a un hilo de LinkedIn.
                     <br /><br />
                     La idea es aprender, documentar y construir conocimiento en público.
                 </p>
-
-                <ul className={styles['pillar-list']}>
-                    {PILLARS.map(pillar => (
-                        <li key={pillar.id} className={styles['pillar-item']}>
-                            <span className={styles['pillar-emoji']}>{pillar.emoji}</span>
-                            {pillar.label}
-                        </li>
-                    ))}
-                </ul>
 
                 {/* Enlaces Sociales / Perfil */}
                 <div className={styles['social-links']}>

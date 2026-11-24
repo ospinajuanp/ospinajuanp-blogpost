@@ -6,6 +6,7 @@ import { AdjacentPosts, PostData, SeriesContext } from '../../../lib/posts';
 import { getProtectedPostContent } from '../../actions';
 import Link from 'next/link';
 import { getPillarLabel } from '../../../lib/config';
+import { formatDate, formatTag } from '../../../lib/format';
 import styles from './content.module.css';
 
 interface PostContentProps {
@@ -40,56 +41,48 @@ export default function PostContent({ post, adjacent, series }: PostContentProps
     const title = post.protected ? (unlockedTitle ?? post.title) : post.title;
 
     return (
-        <article className="prose prose-lg prose-invert mx-auto">
-            <div className="mb-10 text-center">
-                <div className="mb-4 text-sm text-[#a3a3a3]">
-                    <Link href="/" className="hover:text-white transition-colors">
-                        ← Volver al inicio
-                    </Link>
-                    <span className="mx-2">•</span>
-                    <time>{post.date}</time>
+        <article className={styles.article}>
+            <header className={styles.header}>
+                <div className={styles.meta}>
+                    <Link href="/">← Volver al inicio</Link>
+                    <span aria-hidden="true">·</span>
+                    <time dateTime={post.date}>{formatDate(post.date, 'long')}</time>
                 </div>
                 {series && (
                     <div className={styles['series-badge']}>
                         {series.name} · Parte {series.index} de {series.total}
                     </div>
                 )}
-                <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-white">
-                    {title}
-                </h1>
+                <h1 className={styles.title}>{title}</h1>
                 {(post.pilar || (post.tags && post.tags.length > 0)) && (
                     <div className={styles['meta-tags']}>
                         {post.pilar && (
-                            <span className={styles['tag']}>{getPillarLabel(post.pilar)}</span>
+                            <span className={styles.tag}>{getPillarLabel(post.pilar)}</span>
                         )}
                         {post.tags?.map(tag => (
-                            <span key={tag} className={styles['tag']}>{tag}</span>
+                            <span key={tag} className={styles.tag}>{formatTag(tag)}</span>
                         ))}
                     </div>
                 )}
                 {post.image && (
-                    <div className="relative w-full mb-8 overflow-hidden rounded-xl bg-[#262626]">
-                        <img
-                            src={post.image}
-                            alt={post.title}
-                            className="w-full h-auto"
-                        />
+                    <div className={styles.cover}>
+                        <img src={post.image} alt={post.title} />
                     </div>
                 )}
                 {post.protected && (
-                    <div className="inline-block bg-[#1a1a1a] text-xs text-[#a3a3a3] px-3 py-1 rounded-full border border-[#333] mb-6">
+                    <div className={styles['unlock-note']}>
                         🔒 Contenido protegido desbloqueado
                     </div>
                 )}
-            </div>
+            </header>
 
             <div
+                className={styles['article-body']}
                 dangerouslySetInnerHTML={{ __html: contentHtml || '' }}
-                className="text-[#e5e5e5]"
             />
 
             {(adjacent.previous || adjacent.next) && (
-                <nav className={styles['adjacent-nav']}>
+                <nav className={styles['adjacent-nav']} aria-label="Posts relacionados">
                     {adjacent.previous ? (
                         <Link href={`/blog/${adjacent.previous.slug}`} className={styles['adjacent-link']}>
                             <span className={styles['adjacent-label']}>← Anterior</span>
