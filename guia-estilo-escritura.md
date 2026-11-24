@@ -20,7 +20,7 @@ No escribe como instructor o experto. Escribe como alguien que está pensando en
 **Ejemplo:**
 > Hoy entiendo algo distinto: la marca personal también construye valor.
 
-**Característica:** Mezcla de уверенность (confidence) con honestidad sobre lo que está aprendiendo.
+**Característica:** Mezcla de confianza (confidence) con honestidad sobre lo que está aprendiendo.
 
 ---
 
@@ -34,6 +34,9 @@ description: "Una frase que captura el tema central y el valor del post."
 image: "/carpeta/nombre-imagen.png"
 protected: false
 hidden: false
+pilar: construccion
+tags: [zentral, ocr, ia]
+series: Zentral
 ---
 ```
 
@@ -43,6 +46,15 @@ hidden: false
 - **description:** Termina con punto. Explica qué encontrará el lector
 - **image:** Ruta relativa en `/public/` o URL externa
 - **protected/hidden:** `false` para posts públicos
+- **pilar:** Uno de los 8 valores de `lib/config.ts` → `PILLARS`:
+  `construccion`, `oficios`, `carrera`, `salud`, `lecturas`, `fe`, `relaciones`, `rutinas`.
+  Es lo que agrupa los posts en los chips de filtro de la home.
+- **tags:** Palabras clave libres (max 3). Se pueden escribir como array o como texto separado por comas.
+- **series:** Solo si el post es parte de una serie. El badge muestra "Parte N de M" automáticamente.
+
+> Los posts con `protected: true` **nunca** se listan en la home, el RSS ni el sitemap.
+> Solo son accesibles por URL directa con la contraseña. Su contenido se pide al servidor
+> en vivo después de validar la clave, nunca viaja en el HTML inicial.
 
 ---
 
@@ -159,7 +171,7 @@ El autor usa analogías de la vida cotidiana para explicar conceptos técnicos o
 > Imagina que quieres construir una casa. Si le dices al arquitecto "quiero una casa bonita", lo más probable es que termines con algo que no tepite.
 
 ### Ejemplos en Contexto
-Cada概念 principal incluye al menos un ejemplo práctico. Los ejemplos siguen este patrón:
+Cada concepto principal incluye al menos un ejemplo práctico. Los ejemplos siguen este patrón:
 
 ```markdown
 * **Ejemplo:** Descripción del ejemplo concreto
@@ -208,13 +220,22 @@ Los emojis en H2 (`##`) funcionan como marcadores visuales rápidos.
 
 ## 9. Extensión y Ritmo
 
-### Longitud Promedio
-- Posts públicos: 400-800 palabras
+### Longitud por tipo de post
+- **Post expositivo** (reseñas, conceptos, tutoriales): 400-800 palabras
+- **Post de proyecto** (construcción en público, decisiones técnicas): 900-1.600 palabras
+- **Relato de caso** (historias en 3ª persona): 1.200-2.400 palabras
 - Secciones: 2-5 párrafos por sección
 - Párrafos: Cortos a medios (3-6 oraciones)
 
+La extensión sigue a la historia, no al revés. Si la historia pide 2.400 palabras, se escribe
+2.400. Si pide 500, se escribe 500. Lo que no se negocia es el ritmo.
+
 ### Velocidad de Lectura
 El autor escribe para lectura cómoda, no para density máxima. Cada párrafo debería poder leerse en 15-30 segundos.
+
+### Regla de una idea por post
+Un post = una idea. Si aparecen dos ideas que no se soportan entre sí, el post es la peor
+de las dos y la otra merece su propio post.
 
 ---
 
@@ -229,10 +250,78 @@ El autor escribe para lectura cómoda, no para density máxima. Cada párrafo de
 - Conclusiones sin reflexión personal
 - Frontmatter con emojis en el título
 - Títulos de sección sin emoji (en H2)
+- Fechas inventadas o ajustadas para que un post "resulte" más reciente
 
 ---
 
-## 11. Template Para Nuevos Posts
+## 11. Modo Relato de Caso (3ª persona)
+
+Para temas personales (salud, fe, dinero, relaciones, rutinas) el autor cuenta en **tercera
+persona**. Esto no es un capricho: le permite hablar de lo suyo sin ponerlo en primera persona,
+y le permite escribir sobre lo que le pasa a la gente en general.
+
+### Reglas del modo relato
+
+1. **Protagonista sin nombre.** "El que programaba catorce horas", "una.dev que...", "alguien".
+   Puede ser un tú mismo ficcionado. Nunca tu nombre real.
+2. **Cuerpo en 3ª persona.** Ni "yo" ni "mi" en todo el post. La voz del autor solo aparece
+   en el cierre, si aparece.
+3. **Escena concreta antes que tesis.** Lugar, hora, acción. Nada de "la vida moderna exige...".
+4. **3-5 escenas cortas**, separadas con `---`. Cada escena avanza la historia.
+5. **`Lo que aprendí:` es obligatorio** (ver sección 3). Es el bloque que la gente cita,
+   guarda y comparte. Sin él, el post es solo una anécdota.
+6. **Cierre con pregunta directa al lector.** Esto genera comentarios, y los comentarios
+   son la única señal real de enganche que existe.
+7. **Una idea por post** (ver sección 9).
+
+### Anatomía de un relato de caso
+
+```markdown
+---
+title: "El que renunció y se arrepintió en once días"
+date: "2026-XX-XX"
+description: "Una persona trabajando, un proceso de salida mal hecho, y los once días que costaron entenderlo."
+image: "/post/relato.jpg"
+protected: false
+hidden: false
+pilar: carrera
+tags: [empleo, decisiones]
+---
+
+# 🎯 La llamada que empezó con un "sí"
+
+[Escena 1: el momento. Concrete. Alguien con nombre genérico. Qué dijo, qué pasó.]
+
+> **Analogía:** ...
+
+---
+
+# 💼 Lo que pasó después
+
+[Escena 2: la consecuencia. El detalle que hace creíble la historia.]
+
+---
+
+# 🪞 Lo que aprendí
+
+* **Lo que aprendí:** ...
+* **Lo que aprendí:** ...
+
+---
+
+# ✅ Cierre
+
+[Reflexión breve. Y una pregunta al lector que no se pueda responder con "sí" o "no".]
+```
+
+### Título del relato
+- Nombre genérico del protagonista + gancho: *"El que programaba 14 horas y no era feliz"*
+- NUNCA un titular abstracto: *"Reflexiones sobre el burnout"* no funciona.
+- Especificidad > generalidad: números, nombres propios, lugares concretos.
+
+---
+
+## 12. Template Para Nuevos Posts
 
 ```markdown
 ---
@@ -288,9 +377,13 @@ Reflexión final. Resumen con mensaje personal.
 
 ---
 
-## 12. Checklist Antes de Publicar
+## 13. Checklist Antes de Publicar
 
+### Todos los posts
 - [ ] Frontmatter completo con todos los campos
+- [ ] `pilar` asignado (uno de los 8 de `PILLARS`)
+- [ ] `tags` con máximo 3 palabras clave
+- [ ] `series` si es parte de una serie ya iniciada
 - [ ] Título con emoji apropiado
 - [ ] Al menos una analogía o ejemplo práctico
 - [ ] Secciones separadas con `---`
@@ -298,7 +391,50 @@ Reflexión final. Resumen con mensaje personal.
 - [ ] Cierre con reflexión personal o glosario
 - [ ] Revisado en voz alta (las pausas marcan el ritmo)
 - [ ] Imagen asignada o verificar que existe la ruta
+- [ ] `pnpm test:run` y `pnpm build` en verde
+
+### Relatos de caso (además)
+- [ ] El protagonista no tiene nombre real
+- [ ] El cuerpo está escrito en 3ª persona (ni "yo" ni "mi")
+- [ ] Arranca con una escena concreta, no con una tesis
+- [ ] Tiene el bloque `Lo que aprendí:` con 3-5 viñetas
+- [ ] Cierra con una pregunta directa al lector
+- [ ] La idea central es una sola
+
+### Antes de publicar (si es el primero de una serie)
+- [ ] El `series` coincide exactamente con los posts anteriores de esa serie
 
 ---
 
-*Última actualización: Junio 2026*
+## 14. Los 5 Ganchos de Retención
+
+Mecánicos, no estilísticos. Si un post falla en aunque sea uno, se reescribe el post.
+
+1. **Primera línea imbloqueable.** La primera frase tiene que detener el scroll. Si se puede
+   entender de qué va el post sin leerla, es un título, no un gancho.
+2. **El bloque `Lo que aprendí:`** es el botín. Es lo que se cita, lo que se guarda en un
+   screenshot, lo que se comparte. Sin ese bloque, el post pierde su razón de existir.
+3. **Pregunta final al lector.** Genera comentarios. Los comentarios son la única señal de
+   engagement real que existe en un blog personal.
+4. **Una sola idea.** Dos ideas en un post = dos posts, y los dos pierden.
+5. **Título específico.** Números, nombres propios, lugares. "Seis meses sin sueldo" vende
+   infinitamente más que "Reflexiones sobre el trabajo".
+
+---
+
+## 15. Ritmo de Publicación
+
+El objetivo declarado es **un post por semana**. Para lograrlo sin quemarse:
+
+- **Banco de posts.** Escribir 4-6 posts de una vez (2-3 h cada uno) en una sesión de fin de
+  semana. Publicar uno por semana sin escribir nada nuevo.
+- **Regla dura.** No se publica un post sin gancho. Si esa semana no hay historia, esa semana
+  no hay post. Saltarse una semana cuesta 10x menos que publicar un post flojo.
+- **Mezcla semanal.** 1 post de construcción/técnica + 1 relato. El técnico da credibilidad y
+  tráfico de búsqueda; el relato da audiencia general y retención.
+- **Repetir es válido.** Una serie de 3 posts seguidos construye hábito. La gente vuelve por
+  la parte 2.
+
+---
+
+*Última actualización: Noviembre 2026*
